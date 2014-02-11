@@ -25,7 +25,7 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080007;
-        public static final int button1=0x7f080006;
+        public static final int endRecordButton=0x7f080006;
         public static final int recordButton=0x7f080001;
         public static final int settingsButton=0x7f080000;
         public static final int textTimeElapsed=0x7f080005;

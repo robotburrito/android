@@ -50,13 +50,13 @@
         android:inputType="numberSigned" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/endRecordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textTimeElapsed"
         android:layout_alignRight="@+id/textTimeElapsed"
         android:layout_below="@+id/textTimeElapsed"
         android:layout_marginTop="50dp"
-        android:text="Button" />
+        android:text="End Record" />
 
 </RelativeLayout>
