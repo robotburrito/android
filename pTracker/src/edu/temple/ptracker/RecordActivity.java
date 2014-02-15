@@ -12,7 +12,6 @@ import java.util.Date;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PowerManager;
 import android.app.Activity;
 import android.view.Menu;
 import android.content.Context;
@@ -35,10 +34,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	 Date today = new Date();
 	
 	//Did some math... If I sample every 16.67 ms then I am sampling at 60 Hz.
-	long millisecondsBetweenSamples = 17;
+	//long millisecondsBetweenSamples = 17;
 	
 	//Declare the date object for time stamping.
-	String fileNameOutput = Long.toString(today.getTime()) + ".csv";	
+	String fileNameOutput = Long.toString(today.getTime()) + ".csv";
+	//String fileNameOutput = "pleasework.csv";
+	
 	File sdCard = Environment.getExternalStorageDirectory();
 	File directory = new File (sdCard.getAbsolutePath() + "/pTracker");
 	File file = new File(directory, fileNameOutput);
@@ -46,12 +47,21 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	//Declare Button Objects
 	Button stopRecordButton;
 	
+<<<<<<< HEAD
 	
 	//The incoming intent to gather data about this recording activity.
 	//Intent incomingIntent = getIntent();
 	//boolean toRecord = incomingIntent.getBooleanExtra("ACTIVITY_NAME", false);
 	//String sessionName = incomingIntent.getStringExtra("ACTIVITY_NAME");
+=======
+	//Setup file stream by first creating fileNameOutput to automatically generate the filename to save data to. 
+	//Once the file name is created then declare an outputStream
+	
+	//FileOutputStream outputStream;
+>>>>>>> parent of ab65945... Wow it finally works!
 
+	
+	
 	
 
 
@@ -113,7 +123,7 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	    //So I am going to check if less than 200 MS has gone by, if so, lets dump out. However if more than 200 MS
 	    //has gone by then we are going to go ahead and update our fields on the screen.
 	    
-	    if ((actualTime - lastUpdate < millisecondsBetweenSamples)) 
+	    if ((actualTime - lastUpdate < 500)) 
 	    	{
 	    		return;
 	    	}
@@ -132,16 +142,21 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	  }
 	  
 	public void updateXYZFields(float x, float y, float z) throws IOException {
+<<<<<<< HEAD
 		  Long timeStampNow = System.currentTimeMillis();
 
 		  /* comment out if you don't want to show data to the screen. I have yet to determien if this slows things
 		   * down too much to reach the HZ level I want for sampling.
 		   */
 		  if(toRecord == true){
+=======
+		  
+>>>>>>> parent of ab65945... Wow it finally works!
 		  TextView xValueText = (TextView) findViewById(R.id.textXValue);
 		  TextView yValueText = (TextView) findViewById(R.id.textYValue);
 		  TextView zValueText = (TextView) findViewById(R.id.textZValue);
 		  TextView dateValueText = (TextView) findViewById(R.id.textTimeElapsed);
+		  Long timeStampNow = System.currentTimeMillis();
 		  
 
 		  
@@ -151,18 +166,22 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		  String zStringValue = Float.toString(z);
 		  String dateStringValue = Long.toString(timeStampNow);
 		  
-		
 		  //Set values to the text fields.
 		  xValueText.setText(xStringValue);
 		  yValueText.setText(yStringValue);
 		  zValueText.setText(zStringValue);		
 		  dateValueText.setText(dateStringValue);
+<<<<<<< HEAD
 		  }
 		  
 		  //Write the data to a file... I don't like how this is working. I shouldn't be open/closing every loop.
+=======
+		  
+>>>>>>> parent of ab65945... Wow it finally works!
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
-		  pWriter.printf("%d,%f,%f,%f\n",timeStampNow,x,y,z );
+		  pWriter.printf("%d,%f,%f,%f",timeStampNow,x,y,z );
+		  //pWriter.printf("FUCK FUCK FUCK");
 		  pWriter.close();
 		  
 	  }
