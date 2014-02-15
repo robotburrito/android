@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -21,17 +18,8 @@ public class MainActivity extends Activity {
 	Button recordButton;
 	Button settingsButton;
 	
-	//Declare text objects.
-	//EditText sessionNameText = (EditText) findViewById(R.id.sessionNameeditText);
-	//String sessionName = sessionNameText.getText().toString();
-	 
-	//Declare the check button. If it is checked we are going to go ahead and show real time data on the screen.
-	//CheckBox showDataCheckBox = (CheckBox) findViewById(R.id.realTimeCheckBox);
-	//boolean checkBoxChecked = showDataCheckBox.isChecked();
-	 
-	
 	//Declare variable to hold HZ settings.
-	int samplingRateHZ = 60; 
+	int samplingRateHZ = 60;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +35,6 @@ public class MainActivity extends Activity {
 		//Record Button
 		final Intent intentRecordButton = new Intent();
 	    intentRecordButton.setClass(MainActivity.this, RecordActivity.class);
-	    //Configure the intent to actually send some data to the next activity.
-	    //intentRecordButton.putExtra("ACTIVITY_NAME", sessionName);
-	    //intentRecordButton.putExtra("REALTIME_DATA", showDataCheckBox.isChecked());
-	    
-	    
 	      	
 	    recordButton.setOnClickListener(new OnClickListener() 
 	    {
