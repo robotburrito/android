@@ -46,8 +46,11 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	//Declare Button Objects
 	Button stopRecordButton;
 	
-	//Some magic to make the screen not fall asleep. I'm well aware this is the worlds worse
-	//way to handle this and that in the future this will run as a service.
+	
+	//The incoming intent to gather data about this recording activity.
+	//Intent incomingIntent = getIntent();
+	//boolean toRecord = incomingIntent.getBooleanExtra("ACTIVITY_NAME", false);
+	//String sessionName = incomingIntent.getStringExtra("ACTIVITY_NAME");
 
 	
 
@@ -68,7 +71,10 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		//Stop Record Button
 		final Intent intentStopRecordButton = new Intent();
 		intentStopRecordButton.setClass(RecordActivity.this, MainActivity.class);
-			      	
+
+	   //Create the file with the top stamp.
+		
+		//We are done, the stop record button has been hit.
 		stopRecordButton.setOnClickListener(new OnClickListener() 
 		{
 		  	public void onClick(View v) {
@@ -128,7 +134,10 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	public void updateXYZFields(float x, float y, float z) throws IOException {
 		  Long timeStampNow = System.currentTimeMillis();
 
-		  /* comment out...
+		  /* comment out if you don't want to show data to the screen. I have yet to determien if this slows things
+		   * down too much to reach the HZ level I want for sampling.
+		   */
+		  if(toRecord == true){
 		  TextView xValueText = (TextView) findViewById(R.id.textXValue);
 		  TextView yValueText = (TextView) findViewById(R.id.textYValue);
 		  TextView zValueText = (TextView) findViewById(R.id.textZValue);
@@ -148,8 +157,9 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		  yValueText.setText(yStringValue);
 		  zValueText.setText(zStringValue);		
 		  dateValueText.setText(dateStringValue);
-		  */
-		
+		  }
+		  
+		  //Write the data to a file... I don't like how this is working. I shouldn't be open/closing every loop.
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
 		  pWriter.printf("%d,%f,%f,%f\n",timeStampNow,x,y,z );
@@ -166,9 +176,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		
 	}
 
-	public void openFileWithDate()
+	public void openFileStampActivityName(String activityName) throws FileNotFoundException
 	{
-		
+		 FileOutputStream fOut = new FileOutputStream(file, true);
+		 PrintWriter pWriter = new PrintWriter(fOut);
+		 pWriter.printf("Activity Name: %s \n", activityName );
+		 pWriter.close();
 	
 	}
 	protected void onResume() {
