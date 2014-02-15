@@ -13,6 +13,7 @@ import android.content.Context;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
+	//Test of working branch in github.
 	
 	//Declare the button objects.
 	Button recordButton;
