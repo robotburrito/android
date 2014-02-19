@@ -27,13 +27,12 @@
         android:text="Record Activity" />
 
     <EditText
-        android:id="@+id/sessionNameeditText"
+        android:id="@+id/sessionNameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/recordButton"
+        android:layout_above="@+id/checkBox1"
         android:layout_alignLeft="@+id/recordButton"
-        android:layout_alignRight="@+id/recordButton"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="42dp"
         android:ems="10" >
 
         <requestFocus />
@@ -43,9 +42,18 @@
         android:id="@+id/sessionNametextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sessionNameeditText"
-        android:layout_alignLeft="@+id/sessionNameeditText"
+        android:layout_above="@+id/sessionNameEditText"
+        android:layout_alignLeft="@+id/sessionNameEditText"
         android:text="Session Name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/recordButton"
+        android:layout_alignLeft="@+id/recordButton"
+        android:layout_marginBottom="19dp"
+        android:text="Show Real Time Data" />
 
 </RelativeLayout>

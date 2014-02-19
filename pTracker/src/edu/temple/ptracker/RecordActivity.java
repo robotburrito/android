@@ -46,9 +46,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	//Declare Button Objects
 	Button stopRecordButton;
 	
-	//Some magic to make the screen not fall asleep. I'm well aware this is the worlds worse
-	//way to handle this and that in the future this will run as a service.
-
+	//Store the session name.
+	String sessionName = new String();
+	
+	//Declare value for real time in boolean.
+	boolean displayRealTime = false;
+	
 	
 
 
@@ -68,7 +71,20 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		//Stop Record Button
 		final Intent intentStopRecordButton = new Intent();
 		intentStopRecordButton.setClass(RecordActivity.this, MainActivity.class);
-			      	
+		
+		//Grab the session name from the intent that brought the user to this activity.
+		sessionName = getIntent().getStringExtra("sessionName");
+		displayRealTime = getIntent().getBooleanExtra("displayRealTime", false);
+		
+		//Open new file and tag with session name.
+		try {
+			openAndTagFileWithName();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		stopRecordButton.setOnClickListener(new OnClickListener() 
 		{
 		  	public void onClick(View v) {
@@ -128,27 +144,28 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	public void updateXYZFields(float x, float y, float z) throws IOException {
 		  Long timeStampNow = System.currentTimeMillis();
 
-		  /* comment out...
-		  TextView xValueText = (TextView) findViewById(R.id.textXValue);
-		  TextView yValueText = (TextView) findViewById(R.id.textYValue);
-		  TextView zValueText = (TextView) findViewById(R.id.textZValue);
-		  TextView dateValueText = (TextView) findViewById(R.id.textTimeElapsed);
+		  if(displayRealTime == true) {
+			  TextView xValueText = (TextView) findViewById(R.id.textXValue);
+			  TextView yValueText = (TextView) findViewById(R.id.textYValue);
+			  TextView zValueText = (TextView) findViewById(R.id.textZValue);
+			  TextView dateValueText = (TextView) findViewById(R.id.textTimeElapsed);
+			  
+	
+			  
+			  //Convert the values passed to strings so that they can be set to the text fields.
+			  String xStringValue = Float.toString(x);
+			  String yStringValue = Float.toString(y);
+			  String zStringValue = Float.toString(z);
+			  String dateStringValue = Long.toString(timeStampNow);
+			  
+			
+			  //Set values to the text fields.
+			  xValueText.setText(xStringValue);
+			  yValueText.setText(yStringValue);
+			  zValueText.setText(zStringValue);		
+			  dateValueText.setText(dateStringValue);
+		  }
 		  
-
-		  
-		  //Convert the values passed to strings so that they can be set to the text fields.
-		  String xStringValue = Float.toString(x);
-		  String yStringValue = Float.toString(y);
-		  String zStringValue = Float.toString(z);
-		  String dateStringValue = Long.toString(timeStampNow);
-		  
-		
-		  //Set values to the text fields.
-		  xValueText.setText(xStringValue);
-		  yValueText.setText(yStringValue);
-		  zValueText.setText(zStringValue);		
-		  dateValueText.setText(dateStringValue);
-		  */
 		
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
@@ -166,9 +183,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		
 	}
 
-	public void openFileWithDate()
+	public void openAndTagFileWithName() throws FileNotFoundException
 	{
-		
+		  FileOutputStream fOut = new FileOutputStream(file, true);
+		  PrintWriter pWriter = new PrintWriter(fOut);
+		  pWriter.printf("%s\n", sessionName);
+		  pWriter.close();
 	
 	}
 	protected void onResume() {

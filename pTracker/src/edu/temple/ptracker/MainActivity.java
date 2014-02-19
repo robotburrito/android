@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 	//Test of working branch in github.
@@ -18,6 +20,14 @@ public class MainActivity extends Activity {
 	//Declare the button objects.
 	Button recordButton;
 	Button settingsButton;
+	
+	//Declare the Edit Text field for naming the session.
+	EditText nameSessionEditText;
+	String sessionName = new String();
+	
+	//Declare check box and boolean holder.
+	CheckBox checkBoxDisplay;
+	boolean displayRealTime;
 	
 	//Declare variable to hold HZ settings.
 	int samplingRateHZ = 60;
@@ -31,6 +41,11 @@ public class MainActivity extends Activity {
 		recordButton = (Button) findViewById(R.id.recordButton);
 		settingsButton = (Button) findViewById(id.settingsButton);
 		
+		//Define where the text edit and check box are.
+		nameSessionEditText = (EditText) findViewById(R.id.sessionNameEditText);
+		checkBoxDisplay = (CheckBox) findViewById(R.id.checkBox1);
+		
+		
 		//Handle the actual button presses and take the user to the new action.
 		
 		//Record Button
@@ -39,7 +54,18 @@ public class MainActivity extends Activity {
 	      	
 	    recordButton.setOnClickListener(new OnClickListener() 
 	    {
-	      	public void onClick(View v) { startActivity(intentRecordButton);}
+	      	public void onClick(View v) { 
+	      		//Grab the value that is in the nameSessionEditText and put it in a string so that it
+	      		//can be passed on to the actvity.
+	      		
+	      		sessionName = nameSessionEditText.getText().toString();
+	      		displayRealTime = checkBoxDisplay.isChecked();
+	      		
+	      		//Alter the intent to push this data.
+	      		intentRecordButton.putExtra("sessionName", sessionName);
+	      		intentRecordButton.putExtra("displayRealTime", displayRealTime);
+	      		
+	      		startActivity(intentRecordButton);}
 	    });
 	    
 	    
