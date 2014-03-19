@@ -48,6 +48,7 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	Button stopRecordButton;
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	//The incoming intent to gather data about this recording activity.
 	//Intent incomingIntent = getIntent();
@@ -60,6 +61,14 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	//FileOutputStream outputStream;
 >>>>>>> parent of ab65945... Wow it finally works!
 
+=======
+	//Store the session name.
+	String sessionName = new String();
+	
+	//Declare value for real time in boolean.
+	boolean displayRealTime = false;
+	
+>>>>>>> working
 	
 	
 	
@@ -81,10 +90,20 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		//Stop Record Button
 		final Intent intentStopRecordButton = new Intent();
 		intentStopRecordButton.setClass(RecordActivity.this, MainActivity.class);
-
-	   //Create the file with the top stamp.
 		
-		//We are done, the stop record button has been hit.
+		//Grab the session name from the intent that brought the user to this activity.
+		sessionName = getIntent().getStringExtra("sessionName");
+		displayRealTime = getIntent().getBooleanExtra("displayRealTime", false);
+		
+		//Open new file and tag with session name.
+		try {
+			openAndTagFileWithName();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		stopRecordButton.setOnClickListener(new OnClickListener() 
 		{
 		  	public void onClick(View v) {
@@ -145,6 +164,7 @@ public class RecordActivity extends Activity implements SensorEventListener {
 <<<<<<< HEAD
 		  Long timeStampNow = System.currentTimeMillis();
 
+<<<<<<< HEAD
 		  /* comment out if you don't want to show data to the screen. I have yet to determien if this slows things
 		   * down too much to reach the HZ level I want for sampling.
 		   */
@@ -178,6 +198,31 @@ public class RecordActivity extends Activity implements SensorEventListener {
 =======
 		  
 >>>>>>> parent of ab65945... Wow it finally works!
+=======
+		  if(displayRealTime == true) {
+			  TextView xValueText = (TextView) findViewById(R.id.textXValue);
+			  TextView yValueText = (TextView) findViewById(R.id.textYValue);
+			  TextView zValueText = (TextView) findViewById(R.id.textZValue);
+			  TextView dateValueText = (TextView) findViewById(R.id.textTimeElapsed);
+			  
+	
+			  
+			  //Convert the values passed to strings so that they can be set to the text fields.
+			  String xStringValue = Float.toString(x);
+			  String yStringValue = Float.toString(y);
+			  String zStringValue = Float.toString(z);
+			  String dateStringValue = Long.toString(timeStampNow);
+			  
+			
+			  //Set values to the text fields.
+			  xValueText.setText(xStringValue);
+			  yValueText.setText(yStringValue);
+			  zValueText.setText(zStringValue);		
+			  dateValueText.setText(dateStringValue);
+		  }
+		  
+		
+>>>>>>> working
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
 		  pWriter.printf("%d,%f,%f,%f",timeStampNow,x,y,z );
@@ -195,12 +240,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		
 	}
 
-	public void openFileStampActivityName(String activityName) throws FileNotFoundException
+	public void openAndTagFileWithName() throws FileNotFoundException
 	{
-		 FileOutputStream fOut = new FileOutputStream(file, true);
-		 PrintWriter pWriter = new PrintWriter(fOut);
-		 pWriter.printf("Activity Name: %s \n", activityName );
-		 pWriter.close();
+		  FileOutputStream fOut = new FileOutputStream(file, true);
+		  PrintWriter pWriter = new PrintWriter(fOut);
+		  pWriter.printf("%s\n", sessionName);
+		  pWriter.close();
 	
 	}
 	protected void onResume() {

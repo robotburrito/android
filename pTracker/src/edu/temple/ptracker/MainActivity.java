@@ -13,25 +13,24 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	//Test of working branch in github.
 	
 	//Declare the button objects.
 	Button recordButton;
 	Button settingsButton;
 	
-	//Declare text objects.
-	//EditText sessionNameText = (EditText) findViewById(R.id.sessionNameeditText);
-	//String sessionName = sessionNameText.getText().toString();
-	 
-	//Declare the check button. If it is checked we are going to go ahead and show real time data on the screen.
-	//CheckBox showDataCheckBox = (CheckBox) findViewById(R.id.realTimeCheckBox);
-	//boolean checkBoxChecked = showDataCheckBox.isChecked();
-	 
+	//Declare the Edit Text field for naming the session.
+	EditText nameSessionEditText;
+	String sessionName = new String();
+	
+	//Declare check box and boolean holder.
+	CheckBox checkBoxDisplay;
+	boolean displayRealTime;
 	
 	//Declare variable to hold HZ settings.
-	int samplingRateHZ = 60; 
+	int samplingRateHZ = 60;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +41,31 @@ public class MainActivity extends Activity {
 		recordButton = (Button) findViewById(R.id.recordButton);
 		settingsButton = (Button) findViewById(id.settingsButton);
 		
+		//Define where the text edit and check box are.
+		nameSessionEditText = (EditText) findViewById(R.id.sessionNameEditText);
+		checkBoxDisplay = (CheckBox) findViewById(R.id.checkBox1);
+		
+		
 		//Handle the actual button presses and take the user to the new action.
 		
 		//Record Button
 		final Intent intentRecordButton = new Intent();
 	    intentRecordButton.setClass(MainActivity.this, RecordActivity.class);
-	    //Configure the intent to actually send some data to the next activity.
-	    //intentRecordButton.putExtra("ACTIVITY_NAME", sessionName);
-	    //intentRecordButton.putExtra("REALTIME_DATA", showDataCheckBox.isChecked());
-	    
-	    
 	      	
 	    recordButton.setOnClickListener(new OnClickListener() 
 	    {
-	      	public void onClick(View v) { startActivity(intentRecordButton);}
+	      	public void onClick(View v) { 
+	      		//Grab the value that is in the nameSessionEditText and put it in a string so that it
+	      		//can be passed on to the actvity.
+	      		
+	      		sessionName = nameSessionEditText.getText().toString();
+	      		displayRealTime = checkBoxDisplay.isChecked();
+	      		
+	      		//Alter the intent to push this data.
+	      		intentRecordButton.putExtra("sessionName", sessionName);
+	      		intentRecordButton.putExtra("displayRealTime", displayRealTime);
+	      		
+	      		startActivity(intentRecordButton);}
 	    });
 	    
 	    

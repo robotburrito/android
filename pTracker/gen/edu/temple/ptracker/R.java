@@ -25,11 +25,11 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000a;
+        public static final int checkBox1=0x7f080003;
         public static final int endRecordButton=0x7f080009;
-        public static final int realTimeCheckBox=0x7f080004;
         public static final int recordButton=0x7f080001;
-        public static final int sessionNameeditText=0x7f080002;
-        public static final int sessionNametextView=0x7f080003;
+        public static final int sessionNameEditText=0x7f080002;
+        public static final int sessionNametextView=0x7f080004;
         public static final int settingsButton=0x7f080000;
         public static final int textTimeElapsed=0x7f080008;
         public static final int textXValue=0x7f080005;
