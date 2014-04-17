@@ -191,7 +191,8 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		  pWriter.close();
 	
 	}
-	protected void onResume() {
+	
+protected void onResume() {
 	    super.onResume();
 	    // register this class as a listener for the orientation and
 	    // accelerometer sensors
