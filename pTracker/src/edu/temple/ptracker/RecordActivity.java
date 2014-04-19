@@ -37,7 +37,7 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	//Did some math... If I sample every 16.67 ms then I am sampling at 60 Hz.
 	long millisecondsBetweenSamples = 17;
 	
-	//Declare the date object for time stamping.
+	//Setup the file storage.
 	String fileNameOutput = Long.toString(today.getTime()) + ".csv";	
 	File sdCard = Environment.getExternalStorageDirectory();
 	File directory = new File (sdCard.getAbsolutePath() + "/pTracker");
@@ -51,6 +51,9 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	
 	//Declare value for real time in boolean.
 	boolean displayRealTime = false;
+	
+	//Create an instance of ActivityData 
+	ActivityData tempStorage = new ActivityData();
 	
 	
 
@@ -88,6 +91,12 @@ public class RecordActivity extends Activity implements SensorEventListener {
 		stopRecordButton.setOnClickListener(new OnClickListener() 
 		{
 		  	public void onClick(View v) {
+		  		try {
+					endRecording();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		  		finish();}
 		});
 		
@@ -166,11 +175,18 @@ public class RecordActivity extends Activity implements SensorEventListener {
 			  dateValueText.setText(dateStringValue);
 		  }
 		  
-		
+		  
+		  //Previously I was writing each line to a file. This caused a lot of lag.
+		  /*
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
 		  pWriter.printf("%d,%f,%f,%f\n",timeStampNow,x,y,z );
 		  pWriter.close();
+		  */
+		  
+		  //Lets try adding it to an array.
+		  tempStorage.addXYZData(timeStampNow, x, y, z, sessionName);
+		  
 		  
 	  }
 	
@@ -180,6 +196,23 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	
 	public void endRecording() throws IOException{
 		
+		//Write the contents of the tempStorage to a file.
+		
+		//Open the file for output.
+		FileOutputStream fOut = new FileOutputStream(file, true);
+		PrintWriter pWriter = new PrintWriter(fOut);
+		
+		
+		
+		//How big is our tempStorage? We need to know this so we know how many times to loop through and write to the file.
+		int tempStorageSize = tempStorage.returnSize();
+		
+		for (int i = 0; i < tempStorageSize; i++) {
+			pWriter.printf("%s\n", tempStorage.pullXYZData(i));
+		}
+		
+		//We are done. Let's close the file.	
+		pWriter.close();
 		
 	}
 
@@ -192,13 +225,15 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	
 	}
 	
-protected void onResume() {
+	protected void onResume() {
 	    super.onResume();
 	    // register this class as a listener for the orientation and
 	    // accelerometer sensors
 	    sensorManager.registerListener(this,
 	        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-	        SensorManager.SENSOR_DELAY_NORMAL);
+	        SensorManager.SENSOR_DELAY_FASTEST);
+	    
+	    	//Changed from SensorManager.SENSOR_DELAY_NORMAL to SensorManager.SENSOR_DELAY_FASTEST.
 	  }
 
 	protected void onPause() {

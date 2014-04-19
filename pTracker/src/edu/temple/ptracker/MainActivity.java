@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 	    {
 	      	public void onClick(View v) { 
 	      		//Grab the value that is in the nameSessionEditText and put it in a string so that it
-	      		//can be passed on to the actvity.
+	      		//can be passed on to the activity.
 	      		
 	      		sessionName = nameSessionEditText.getText().toString();
 	      		displayRealTime = checkBoxDisplay.isChecked();
