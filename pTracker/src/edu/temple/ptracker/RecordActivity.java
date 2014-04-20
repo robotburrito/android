@@ -6,16 +6,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+//import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PowerManager;
+//import android.os.PowerManager;
 import android.app.Activity;
 import android.view.Menu;
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -56,7 +56,6 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	ActivityData tempStorage = new ActivityData();
 	
 	
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
