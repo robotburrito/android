@@ -35,6 +35,9 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	 Date today = new Date();
 	
 	//Did some math... If I sample every 16.67 ms then I am sampling at 60 Hz.
+	//The next step for this is to implement this setting into the settingsActivity so that it
+	//can be dynamically set. For now it is just static.
+	
 	long millisecondsBetweenSamples = 17;
 	
 	//Setup the file storage.
@@ -219,6 +222,7 @@ public class RecordActivity extends Activity implements SensorEventListener {
 	{
 		  FileOutputStream fOut = new FileOutputStream(file, true);
 		  PrintWriter pWriter = new PrintWriter(fOut);
+		  //Write a header out to the file.
 		  pWriter.printf("%s\n", sessionName);
 		  pWriter.close();
 	

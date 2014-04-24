@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_record">RecordActivity</string>
+    <string name="settingsString">Settings Menu Place Holder</string>
 
 </resources>
