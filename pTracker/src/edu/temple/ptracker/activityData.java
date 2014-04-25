@@ -23,11 +23,11 @@ public class ActivityData {
 	}
 		
 	//Add X,Y,Z data along with Time to the temp array.
-	public void addXYZData(float timeData, float xData, float yData, float zData, String name){
+	public void addXYZData(long timeData, float xData, float yData, float zData, String name){
 		
 		//Combine all the inputs into a string to add to the list.
 		String tempString = new String();
-		tempString = Float.toString(timeData) + "," + Float.toString(xData) + "," + Float.toString(yData) + "," + Float.toString(zData) + "," + name;
+		tempString = Long.toString(timeData) + "," + Float.toString(xData) + "," + Float.toString(yData) + "," + Float.toString(zData) + "," + name;
 		activityVector.add(tempString);
 		
 	}
